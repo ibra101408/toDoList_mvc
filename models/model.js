@@ -1,79 +1,62 @@
 const sqlite3 = require('sqlite3').verbose();
 
-// Init database to file
-/*let db = new sqlite3.Database('ToDoList', (err) => {
-    if (err) {
-        console.error(err.message)
+
+// Connect to the SQLite database
+const db = new sqlite3.Database('./data/todos.db');
+
+
+
+// Export functions to interact with the database
+module.exports = {
+    getAll: () => {
+        return new Promise((resolve, reject) => {
+            db.all('SELECT * FROM todos', [], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            });
+        });
+    },
+
+    create: (task) => {
+        return new Promise((resolve, reject) => {
+            db.run('INSERT INTO todos (task) VALUES (?)', [task], function (err) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(this.lastID);
+                }
+            });
+        });
+    },
+
+    update: (id, completed) => {
+        return new Promise((resolve, reject) => {
+            db.run('UPDATE todos SET completed = ? WHERE id = ?', [completed, id], function (err) {
+                if (err) {
+                    reject(err);
+                } else if (this.changes === 0) {
+                    reject(new Error(`No todo with id ${id} found`));
+                } else {
+                    resolve(this.changes);
+                }
+            });
+        });
+    },
+
+    delete: (id) => {
+        return new Promise((resolve, reject) => {
+            db.run('DELETE FROM todos WHERE id = ?', [id], function (err) {
+                if (err) {
+                    reject(err);
+                } else if (this.changes === 0) {
+                    reject(new Error(`No todo with id ${id} found`));
+                } else {
+                    resolve(this.changes);
+                }
+            });
+        });
     }
-    console.log('Connected to the database.')
-})*/
-const db = new sqlite3.Database('ToDoList');
-
-db.run('CREATE TABLE IF NOT EXISTS todos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT)', (err) => {
-    if (err) {
-        console.log('Error creating todos table:', err.message);
-    } else {
-        console.log('Todos table  created successfully');
-    }
-});
-/*
-const getAllTodos = (callback) => {
-    db.all('SELECT * FROM todos', (err, rows) => {
-        if (err) {
-            throw err;
-        }
-        callback(rows);
-    });
 };
-*/
-const Todo = {
-    all: () => {
-        db.all('SELECT * FROM todos', [], (err, rows) => {
-            if (err) {
-                throw err;
-            }
-            return rows;
-        });
-    },
-
-    create: (data, callback) => {
-        const query = 'INSERT INTO todos (title, description) VALUES (?, ?)';
-        db.run(query, [data.title, data.description], (err) => {
-            if (err) {
-                throw err;
-            }
-            callback();
-        });
-    },
-
-    findById: (id, callback) => {
-        db.get('SELECT * FROM todos WHERE id = ?', [id], (err, row) => {
-            if (err) {
-                throw err;
-            }
-            callback(row);
-        });
-    },
-
-    update: (data, callback) => {
-        const query = 'UPDATE todos SET title = ?, description = ? WHERE id = ?';
-        db.run(query, [data.title, data.description, data.id], (err) => {
-            if (err) {
-                throw err;
-            }
-            callback();
-        });
-    },
-
-    delete: (id, callback) => {
-        db.run('DELETE FROM todos WHERE id = ?', [id], (err) => {
-            if (err) {
-                throw err;
-            }
-            callback();
-        });
-    },
-};
-
-// Export the Todo model
-module.exports = Todo;
