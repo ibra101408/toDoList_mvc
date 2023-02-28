@@ -1,0 +1,11 @@
+html
+    head
+        title To-Do List
+    body
+        h1 To-Do List
+        ul
+            each item in items
+                li= item.description
+        form(action='/todos', method='POST')
+            input(type='text', name='description')
+            button(type='submit') Add Item
