@@ -20,9 +20,10 @@ module.exports = {
         });
     },
 
-    create: () => {
+    create: (id, title, description) => {
         return new Promise((resolve, reject) => {
-            db.run('INSERT INTO todos VALUES ("id", "title", "description")', [], function (err) {
+            const stmt = 'INSERT INTO todos (id, title, description) VALUES (?, ?, ?)';
+            db.run(stmt, [id, title, description], function (err) {
                 if (err) {
                     reject(err);
                 } else {
@@ -32,9 +33,9 @@ module.exports = {
         });
     },
 
-    update: (id, completed) => {
+    update: (id, description) => {
         return new Promise((resolve, reject) => {
-            db.run('UPDATE todos SET completed = ? WHERE id = ?', [completed, id], function (err) {
+            db.run('UPDATE todos SET description = ? WHERE id = ?', [description, id], function (err) {
                 if (err) {
                     reject(err);
                 } else if (this.changes === 0) {

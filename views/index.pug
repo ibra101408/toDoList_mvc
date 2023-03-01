@@ -4,12 +4,11 @@ html
     body
         h1 To-Do List
         form(action='/todos', method='post')
-            label(for="id") id:
-            input(type="integer", id="id", name="id")
+
             label(for="title") Title:
-            input(type="text", id="title", name="title")
+            input(type="text", id="title", name="title" required)
             label(for="description") Description:
-            input(type="text", id="description", name="description")
+            input(type="text", id="description", name="description" required)
             button(type="submit") Add Item
         ul
             each todo in todos

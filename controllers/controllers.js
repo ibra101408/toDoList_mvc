@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     try {
         const todos = await model.getAll();
         res.render('index', { todos });
-        } catch (err) {
+    } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
@@ -18,14 +18,22 @@ router.get('/', async (req, res) => {
 
 
 // POST a new to-do item
-router.post('/', async function (req, res, next) {
+/*router.post('/', async function (req, res, next) {
     try {
         const todos = await model.create(req.body);
         res.render('index', { todos: [todos] });
     } catch (err) {
         next(err);
     }
-});
+});*/
+exports.create = async (req, res, next) => {
+    try {
+        const todo = await model.create(req.body.id, req.body.title, req.body.description);
+        res.status(201).json(todo);
+    } catch (error) {
+        next(error);
+    }
+};
 
 // DELETE a to-do item
 router.delete('/:id', async function (req, res) {
@@ -35,10 +43,7 @@ router.delete('/:id', async function (req, res) {
     } catch (err) {
         console.error(err.message);
     }
-    /*const id = req.params.id;
-    model.delete(id, () => {
-        res.sendStatus(200);
-    });*/
+
 });
 
 module.exports = router;
