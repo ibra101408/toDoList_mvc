@@ -18,15 +18,15 @@ router.get('/', async (req, res) => {
 
 
 // POST a new to-do item
-/*router.post('/', async function (req, res, next) {
+router.post('/', async function (req, res, next) {
     try {
         const todos = await model.create(req.body);
         res.render('index', { todos: [todos] });
     } catch (err) {
         next(err);
     }
-});*/
-exports.create = async (req, res, next) => {
+});
+/*exports.create = async (req, res, next) => {
     try {
         const todo = await model.create(req.body.id, req.body.title, req.body.description);
         res.status(201).json(todo);
@@ -34,6 +34,18 @@ exports.create = async (req, res, next) => {
         next(error);
     }
 };
+
+router.post('/', async (req, res) => {
+    try {
+        const { title, description } = req.body;
+        const todo = await model.create(title, description);
+        res.redirect('/todos');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    }
+});*/
+
 
 // DELETE a to-do item
 router.delete('/:id', async function (req, res) {
