@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const model = require('../models/model');
 
+
 // GET all to-do items
 router.get('/', async (req, res) => {
     try {
@@ -14,6 +15,7 @@ router.get('/', async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
+
 
 // POST a new to-do item
 router.post('/', async function (req, res, next) {

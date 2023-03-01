@@ -3,9 +3,16 @@ html
         title To-Do List
     body
         h1 To-Do List
+        form(action='/todos', method='post')
+            label(for="id") id:
+            input(type="integer", id="id", name="id")
+            label(for="title") Title:
+            input(type="text", id="title", name="title")
+            label(for="description") Description:
+            input(type="text", id="description", name="description")
+            button(type="submit") Add Item
         ul
-            each item in items
-                li= item.description
-        form(action='/todos', method='POST')
-            input(type='text', name='description')
-            button(type='submit') Add Item
+            each todo in todos
+                li= todo.description
+                li= todo.title
+

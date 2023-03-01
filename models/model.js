@@ -2,7 +2,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 
 // Connect to the SQLite database
-const db = new sqlite3.Database('./data/todos.db');
+const db = new sqlite3.Database('identifier.sqlite')
 
 
 
@@ -20,9 +20,9 @@ module.exports = {
         });
     },
 
-    create: (task) => {
+    create: () => {
         return new Promise((resolve, reject) => {
-            db.run('INSERT INTO todos (task) VALUES (?)', [task], function (err) {
+            db.run('INSERT INTO todos VALUES ("id", "title", "description")', [], function (err) {
                 if (err) {
                     reject(err);
                 } else {
