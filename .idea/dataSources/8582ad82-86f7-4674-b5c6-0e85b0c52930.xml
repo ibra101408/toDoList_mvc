@@ -1469,7 +1469,6 @@
     </column>
     <column id="516" parent="506" name="description">
       <DataType>TEXT|0s</DataType>
-      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
     <index id="517" parent="506" name="todos_id_uindex">

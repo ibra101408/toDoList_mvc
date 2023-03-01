@@ -1,9 +1,11 @@
 const sqlite3 = require('sqlite3').verbose();
+const express = require("express");
+
+
 
 
 // Connect to the SQLite database
 const db = new sqlite3.Database('identifier.sqlite')
-
 
 
 // Export functions to interact with the database
@@ -20,10 +22,10 @@ module.exports = {
         });
     },
 
-    create: (id, title, description) => {
+    create: (title, description) => {
         return new Promise((resolve, reject) => {
-            const stmt = 'INSERT INTO todos (id, title, description) VALUES (?, ?, ?)';
-            db.run(stmt, [id, title, description], function (err) {
+            const stmt = 'INSERT INTO todos (title, description) VALUES (?, ?)';
+            db.run(stmt, [title, description], function (err) {
                 if (err) {
                     reject(err);
                 } else {

@@ -4,6 +4,24 @@ const express = require('express');
 const router = express.Router();
 const model = require('../models/model');
 
+/*
+module.exports = {
+    create: async (req, res) => {
+        try {
+            //const id = req.body.id;
+            const title = req.body.title;
+            const description = req.body.description;
+
+            const todoId = await model.create(title, description);
+
+            res.redirect(`/todos/${todoId}`);
+        } catch (error) {
+            console.error(error);
+            res.sendStatus(500);
+        }
+    },
+};*/
+
 
 // GET all to-do items
 router.get('/', async (req, res) => {
@@ -17,6 +35,17 @@ router.get('/', async (req, res) => {
 });
 
 
+/*
+router.post('/todos', async (req, res) => {
+    try {
+        const { id, title, description } = req.body;
+        const todoId = await model.create(id, title, description);
+        res.redirect('/todos');
+    } catch (error) {
+        console.error(error);
+        res.render('error', { error });
+    }
+});*/
 // POST a new to-do item
 router.post('/', async function (req, res, next) {
     try {

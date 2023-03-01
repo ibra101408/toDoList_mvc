@@ -4,14 +4,15 @@ html
     body
         h1 To-Do List
         form(action='/todos', method='post')
+            label(for="description") Description:
+            input#description(type="text", name="description" required)
 
             label(for="title") Title:
-            input(type="text", id="title", name="title" required)
-            label(for="description") Description:
-            input(type="text", id="description", name="description" required)
+            input#title(type="text", name="title" required)
+
             button(type="submit") Add Item
         ul
             each todo in todos
                 li= todo.description
                 li= todo.title
-
+                p Todo title is a #{typeof todo.title}
