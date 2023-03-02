@@ -3,7 +3,6 @@ const express = require("express");
 
 
 
-
 // Connect to the SQLite database
 const db = new sqlite3.Database('identifier.sqlite')
 

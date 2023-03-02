@@ -11,6 +11,7 @@ app.use(express.static('public'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
+
 /*
 app.post('/todos', async (req, res) => {
     const id = req.body.id;
